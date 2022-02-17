@@ -31,7 +31,6 @@ export function CategorySelect({
 }: Props) {
   function handleCategorySelect(category: Category) {
     setCategory(category);
-    console.log("CATEGORY", category);
   }
 
   return (
