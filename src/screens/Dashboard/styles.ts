@@ -2,11 +2,12 @@ import styled from 'styled-components/native';
 import { FlatList, FlatListProps } from 'react-native';
 import { Feather } from "@expo/vector-icons";
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
-import { getStatusBarHeight, getBottomSpace} from 'react-native-iphone-x-helper';
+import { getStatusBarHeight} from 'react-native-iphone-x-helper';
+import { BorderlessButton, GestureHandlerRootView} from 'react-native-gesture-handler';
 
 import { DataListProps } from '.';
 
-export const Container = styled.View`
+export const Container = styled(GestureHandlerRootView)`
   flex: 1;
   background-color: ${( { theme } ) => theme.colors.background};
 `;
@@ -55,6 +56,8 @@ export const UserName = styled.Text`
   font-size: ${RFValue(18)}px;
   font-family: ${({ theme: theme }) => theme.fonts.bold};
 `;
+
+export const LogoutButton = styled(BorderlessButton)``;
 
 export const Icon = styled(Feather)`
   color: ${({ theme: theme }) => theme.colors.secondary};
