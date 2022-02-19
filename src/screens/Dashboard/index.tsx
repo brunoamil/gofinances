@@ -35,7 +35,31 @@ export function Dashboard() {
     const dataKey = "@gofinances:transactions";
     const response = await AsyncStorage.getItem(dataKey);
     console.log("response", response);
-    // const transactions = response ? JSON.parse(response) : [];
+    const transactions = response ? JSON.parse(response) : [];
+
+    const transactionsFormatted: DataListProps[] = transactions.map(
+      (item: DataListProps) => {
+        const amount = Number(item.amount).toLocaleString("pt-BR", {
+          style: "currency",
+          currency: "BRL",
+        });
+        const date = Intl.DateTimeFormat("pt-Br", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "2-digit",
+        }).format(new Date(item.date));
+
+        return {
+          id: item.id,
+          name: item.name,
+          amount,
+          type: item.type,
+          category: item.category,
+          date,
+        };
+      }
+    );
+    setData(transactionsFormatted);
 
     // const transactionsFormatted: DataListProps[] = transactions.map(
     //   (item: DataListProps) => {
