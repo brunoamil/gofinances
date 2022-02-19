@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Modal, Keyboard, Alert } from "react-native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { useForm } from "react-hook-form";
@@ -46,7 +46,6 @@ export function Register() {
     key: "category",
     name: "Categoria",
   });
-  const dataKey = "@gofinances:transactions";
   const navigation = useNavigation<NavigationProps>();
 
   const {
@@ -86,6 +85,7 @@ export function Register() {
     };
 
     try {
+      const dataKey = "@gofinances:transactions";
       const data = await AsyncStorage.getItem(dataKey);
       const currentData = data ? JSON.parse(data) : [];
 
@@ -105,6 +105,15 @@ export function Register() {
       console.log("ERROR", error);
     }
   }
+
+  // useEffect(() => {
+  //   async function deleteAll() {
+  //     const dataKey = "@gofinances:transactions";
+
+  //     await AsyncStorage.removeItem(dataKey);
+  //   }
+  //   deleteAll();
+  // }, []);
 
   return (
     <TouchableWithoutFeedback
