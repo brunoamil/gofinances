@@ -6,6 +6,7 @@ import { ActivityIndicator } from "react-native";
 
 import { HighlightCard } from "../../components/HighlightCard";
 import { useTheme } from "styled-components";
+import { useAuth } from "../../hooks/auth";
 
 import {
   TransactionCard,
@@ -50,6 +51,7 @@ export function Dashboard() {
     {} as HighlightData
   );
   const theme = useTheme();
+  const { signOut, user } = useAuth();
   const [isLoading, setIsLoading] = useState(true);
 
   function getLastTransactionDate(
@@ -177,16 +179,16 @@ export function Dashboard() {
               <UserInfo>
                 <Photo
                   source={{
-                    uri: "https://avatars.githubusercontent.com/u/8558185?v=4",
+                    uri: user.photo,
                   }}
                 />
                 <User>
                   <UserGreeting>Olá,</UserGreeting>
-                  <UserName>Bruno</UserName>
+                  <UserName>{user.name}</UserName>
                 </User>
               </UserInfo>
               <GestureHandlerRootView>
-                <LogoutButton onPress={() => {}}>
+                <LogoutButton onPress={signOut}>
                   <Icon name="power" />
                 </LogoutButton>
               </GestureHandlerRootView>
