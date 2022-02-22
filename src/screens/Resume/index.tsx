@@ -8,6 +8,7 @@ import { addMonths, subMonths, format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { ActivityIndicator } from "react-native";
 
+import { useAuth } from "../../hooks/auth";
 import { HistoryCard } from "../../components/HistoryCard";
 import { categories } from "../../utils/categories";
 
@@ -49,19 +50,18 @@ export function Resume() {
     []
   );
   const theme = useTheme();
+  const { user } = useAuth();
 
   function handleChangeDate(action: "next" | "prev") {
     if (action === "next") {
       setSelectedDate(addMonths(selectedDate, 1));
-      console.log(selectedDate);
     } else {
       setSelectedDate(subMonths(selectedDate, 1));
-      console.log(selectedDate);
     }
   }
   async function loadData() {
     setIsLoading(true);
-    const dataKey = "@gofinances:transactions";
+    const dataKey = `@gofinances:transactions_user:${user.id}`;
     const response = await AsyncStorage.getItem(dataKey);
     const responseFormatted = response ? JSON.parse(response) : [];
 

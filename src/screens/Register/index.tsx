@@ -8,6 +8,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import uuid from "react-native-uuid";
 import { useNavigation } from "@react-navigation/native";
 
+import { useAuth } from "../../hooks/auth";
+
 import { Button } from "../../components/Forms/Button";
 import { CategorySelectButton } from "../../components/Forms/CategorySelectButton";
 import { InputForm } from "../../components/Forms/InputForm";
@@ -48,6 +50,7 @@ export function Register() {
   });
   const navigation = useNavigation<NavigationProps>();
 
+  const { user } = useAuth();
   const {
     control,
     handleSubmit,
@@ -85,7 +88,7 @@ export function Register() {
     };
 
     try {
-      const dataKey = "@gofinances:transactions";
+      const dataKey = `@gofinances:transactions_user:${user.id}`;
       const data = await AsyncStorage.getItem(dataKey);
       const currentData = data ? JSON.parse(data) : [];
 
@@ -102,7 +105,6 @@ export function Register() {
       navigation.navigate("Listagem");
     } catch (error) {
       Alert.alert("Não foi possível salvar");
-      console.log("ERROR", error);
     }
   }
 
